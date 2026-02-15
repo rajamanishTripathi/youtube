@@ -9,3 +9,6 @@ Changed terminal to bash in vs code
 2. installed and configured tailwind css 3
     npm install -D tailwindcss@3 postcss autoprefixer
     npx tailwindcss init -p
+
+3. install react redux
+    npm i @redujs/toolkit react-redux
