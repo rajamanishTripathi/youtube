@@ -11,4 +11,4 @@ Changed terminal to bash in vs code
     npx tailwindcss init -p
 
 3. install react redux
-    npm i @redujs/toolkit react-redux
+    npm i @reduxjs/toolkit react-redux
