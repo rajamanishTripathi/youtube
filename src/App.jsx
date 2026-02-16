@@ -5,6 +5,26 @@ import Header from './components/Header';
 import { Provider } from 'react-redux';
 import store from './hooks/store';
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainContainer from "./components/MainContainer";
+import WatchPage from "./components/WatchPage";
+
+
+
+const appRouter = createBrowserRouter([{
+  path:"/",
+  element: <Body/>,
+  children:[
+    {
+      path:"/",
+      element:<MainContainer/>
+    },
+    {
+      path:"watch",
+      element:<WatchPage/>
+    },
+  ]
+}])
 
 
 function App() {
@@ -12,13 +32,15 @@ function App() {
 
   return (
     <>
-    <GoogleOAuthProvider clientId="425778344627-jggdqtb5moekb4dde3rmppl7558f4q0h.apps.googleusercontent.com">
+    <GoogleOAuthProvider>
       <Provider store={store}>
         {/* <div className='font-bold'>
           Youtube
           </div> */}
           <Header/>
-          <Body/>
+          <RouterProvider router={appRouter}>
+            <Body/>
+          </RouterProvider>
         </Provider>
       </GoogleOAuthProvider>
     </>
