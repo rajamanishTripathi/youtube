@@ -41,6 +41,7 @@ const VideoContainer = () => {
     <>    
     <button onClick={() => getVideos()}>Login with Google</button>
       <div className='flex flex-wrap'>
+        {/* since initial render is empty error. i have added a check yvideo[0] in below line */}
         {yvideo[0] && <AdVideo  info={yvideo[0]}/>}
         {yvideo.map((yvideos) => 
          <Link to={"watch?v="+yvideos.id} key={yvideos.id}>
@@ -52,4 +53,4 @@ const VideoContainer = () => {
   )
 }
 
-export default VideoContainer
+export default VideoContainer;
