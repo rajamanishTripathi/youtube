@@ -41,7 +41,7 @@ const VideoContainer = () => {
     <button onClick={() => getVideos()}>Login with Google</button>
       <div className='flex flex-wrap'>
         {yvideo.map((yvideos) => 
-         <Link to={"watch?v"+yvideos.id}>
+         <Link to={"watch?v="+yvideos.id}>
             <VideoCards key={yvideos.id}  info={yvideos}/>
           </Link>
         )}

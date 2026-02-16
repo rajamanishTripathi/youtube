@@ -11,7 +11,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='p-5 shadow-lg col-span-1 '>
+    <div className='p-5 shadow-lg col-span-1'>
        <ul>
         <li><Link to="/">Home</Link></li>
         <li>Shorts</li>
