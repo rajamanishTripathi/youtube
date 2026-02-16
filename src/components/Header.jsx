@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
 import { toggleMenu } from "../hooks/appSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { YOUTUBE_SEARCH_API } from "../hooks/constant";
+import { cacheResults } from "../hooks/searchSlice";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const[showsuggestions, setShowsuggestions] = useState(false);
+  const [showsuggestions, setShowsuggestions] = useState(false);
   // console.log(searchQuery);
+
+  const searchcache = useSelector((store) => store.search);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //Api call
     //make api call after every keypress
     // but decline api call  if differnce is less than 200ms
-    const timer = setTimeout(() => searchSuggestion(), 200);
+        const timer = setTimeout(() => {
+            if (searchcache[searchQuery]){
+                setSuggestions(searchcache[searchQuery]);
+            }else{
+                searchSuggestion();
+            }
+        
+        }, 200);
 
-    //clear timer
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [searchQuery]);
+        //clear timer
+        return () => {
+        clearTimeout(timer);
+        };
+    
+    }, [searchQuery]);
 
   const searchSuggestion = async () => {
     console.log(searchQuery);
@@ -27,6 +39,11 @@ const Header = () => {
     const json = await data.json();
     console.log(json);
     setSuggestions(json[1]);
+
+    //update search cache
+    dispatch(cacheResults({
+        [searchQuery]:json[1]
+    }));
   };
 
   /**
@@ -49,7 +66,6 @@ const Header = () => {
    * then new setimeout(200) starts - and make api call after 200ms
    */
 
-  const dispatch = useDispatch();
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
   };
@@ -88,19 +104,21 @@ const Header = () => {
             🔍
           </button>
         </div>
-            {showsuggestions && (<div className="fixed bg-white py-2 px-5 w-[65rem] rounded-lg">
+        {showsuggestions && (
+          <div className="fixed bg-white py-2 px-5 w-[65rem] rounded-lg">
             <ul>
-                {suggestions?.map((suggest) => (
+              {suggestions?.map((suggest) => (
                 <li
-                    key={suggest}
-                    className="py-2 px-3 shadow-sm hover:bg-gray-400"
+                  key={suggest}
+                  className="py-2 px-3 shadow-sm hover:bg-gray-400"
                 >
-                    {suggest}
+                  {suggest}
                 </li>
-                ))}
+              ))}
             </ul>
-            </div>)}
-        </div>
+          </div>
+        )}
+      </div>
       <div>
         <img
           className="h-20 col-span-1"
