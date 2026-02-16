@@ -7,7 +7,7 @@ import VideoCards from './VideoCards';
 const VideoContainer = () => {
 
   //usestate to mapover the item of youtube to trigger reconciliation after it changes
-  // const [yvideo, setYvideo] = useState([]);
+  const [yvideo, setYvideo] = useState([]);
  
 
   const getVideos = async () => {
@@ -23,23 +23,25 @@ const VideoContainer = () => {
         }
       );
       const data = await res.json();
-      // setYvideo(data);
-      console.log(data);
+      setYvideo(data.items);
+      console.log(data.items);
     } catch (err) {
       console.error("Auth Error:", err);
     }
   };
 
-  // useEffect(()=> {
-  //   getVideos();
-  // },[]);
+  useEffect(()=> {
+    getVideos();
+  },[]);
 
 
   return (
-    <div>
-      {/* <VideoCards/> */}
-      <button onClick={() => getVideos()}>Login with Google</button>
-    </div>
+    <>    
+    <button onClick={() => getVideos()}>Login with Google</button>
+      <div className='flex flex-wrap'>
+        {yvideo.map(yvideos => <VideoCards key={yvideos.id}  info={yvideos}/>)}
+      </div>
+    </>
   )
 }
 
