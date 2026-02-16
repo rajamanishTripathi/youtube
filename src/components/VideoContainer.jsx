@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 // import { useGoogleLogin } from "@react-oauth/google";
 import { getYouTubeAccessToken } from "./useGoogleAuth";
 import VideoCards from './VideoCards';
-import {Link} from "react-router-dom"; 
+import {Link} from "react-router-dom";
+import {AdVideo} from "./VideoCards"; 
 
 const VideoContainer = () => {
 
@@ -40,9 +41,10 @@ const VideoContainer = () => {
     <>    
     <button onClick={() => getVideos()}>Login with Google</button>
       <div className='flex flex-wrap'>
+        {yvideo[0] && <AdVideo  info={yvideo[0]}/>}
         {yvideo.map((yvideos) => 
-         <Link to={"watch?v="+yvideos.id}>
-            <VideoCards key={yvideos.id}  info={yvideos}/>
+         <Link to={"watch?v="+yvideos.id} key={yvideos.id}>
+            <VideoCards   info={yvideos}/>
           </Link>
         )}
       </div>

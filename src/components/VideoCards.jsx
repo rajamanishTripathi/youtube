@@ -16,4 +16,13 @@ const VideoCards = ({info}) => {
   )
 }
 
+// Higher Order Function .it takes a component and modifies it a little
+export const AdVideo = ({info}) =>{
+  return (
+    <div className='border border-fuchsia-950'>
+      <VideoCards info ={info}/>
+    </div>
+  )
+} 
+
 export default VideoCards
